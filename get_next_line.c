@@ -1,0 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcheng <dcheng@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/07 17:01:15 by dcheng            #+#    #+#             */
+/*   Updated: 2025/11/22 04:22:07 by dcheng           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+char	*extract_line(char **save)
+{
+	char	*line;
+	char	*tmp;
+	int		len;
+
+	len = 0;
+	if (!*save || **save == '\0')
+		return (NULL);
+	while ((*save)[len] && (*save)[len] != '\n')
+		len++;
+	line = ft_substr_gnl(*save, 0, len + ((*save)[len] == '\n'));
+	if (!line)
+		return (NULL);
+	tmp = ft_strdup_gnl(*save + len + ((*save)[len] == '\n'));
+	free(*save);
+	*save = tmp;
+	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*save;
+	char		*buff;
+	int			bytes;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buff = malloc(BUFFER_SIZE + 1);
+	if (!buff)
+		return (NULL);
+	bytes = 1;
+	while (bytes > 0 && !ft_strchr_gnl(save, '\n'))
+	{
+		bytes = read(fd, buff, BUFFER_SIZE);
+		if (bytes < 0)
+		{
+			free(buff);
+			return (NULL);
+		}
+		buff[bytes] = '\0';
+		save = ft_strjoin_gnl(save, buff, bytes);
+	}
+	free(buff);
+	return (extract_line(&save));
+}

@@ -6,7 +6,7 @@
 /*   By: dcheng <dcheng@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 17:01:15 by dcheng            #+#    #+#             */
-/*   Updated: 2025/11/22 04:22:07 by dcheng           ###   ########.fr       */
+/*   Updated: 2025/11/23 02:37:33 by dcheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*extract_line(char **save)
 {
 	char	*line;
 	char	*tmp;
-	int		len;
+	size_t	len;
 
 	len = 0;
 	if (!*save || **save == '\0')

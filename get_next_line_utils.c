@@ -6,7 +6,7 @@
 /*   By: dcheng <dcheng@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:30:58 by dcheng            #+#    #+#             */
-/*   Updated: 2025/11/22 04:28:57 by dcheng           ###   ########.fr       */
+/*   Updated: 2025/11/23 02:37:59 by dcheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_strlen_gnl(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	if (!str)
 		return (0);
@@ -58,10 +58,10 @@ char	*ft_strdup_gnl(const char *s)
 	return (dup);
 }
 
-char	*ft_substr_gnl(char *s, int start, int len)
+char	*ft_substr_gnl(char *s, int start, size_t len)
 {
 	char	*sub;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	if (!s)
@@ -78,11 +78,11 @@ char	*ft_substr_gnl(char *s, int start, int len)
 	return (sub);
 }
 
-char	*ft_strjoin_gnl(char *save, char *buff, int r)
+char	*ft_strjoin_gnl(char *save, char *buff, size_t r)
 {
 	char	*str;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;

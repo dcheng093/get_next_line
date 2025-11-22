@@ -6,7 +6,7 @@
 /*   By: dcheng <dcheng@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 05:08:40 by dcheng            #+#    #+#             */
-/*   Updated: 2025/11/22 05:08:40 by dcheng           ###   ########.fr       */
+/*   Updated: 2025/11/23 02:39:08 by dcheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*extract_line(char **save);
 char	*ft_strdup_gnl(const char *s);
 int		ft_strlen_gnl(const char *str);
 char	*ft_strchr_gnl(const char *s, int c);
-char	*ft_substr_gnl(char *s, int start, int len);
-char	*ft_strjoin_gnl(char *save, char *buff, int r);
+char	*ft_substr_gnl(char *s, int start, size_t len);
+char	*ft_strjoin_gnl(char *save, char *buff, size_t r);
 
 #endif

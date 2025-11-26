@@ -1,21 +1,33 @@
-#include <fcntl.h>
-#include <stdio.h>
-#include "get_next_line.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mandatory_main.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcheng <dcheng@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 16:27:25 by dcheng            #+#    #+#             */
+/*   Updated: 2025/11/26 16:27:25 by dcheng           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int main(void)
-{
-    int fd = open("get_next_line_utils.c", O_RDONLY);
-    char *line;
+// #include <fcntl.h>
+// #include <stdio.h>
+// #include "get_next_line.h"
 
-    if (fd < 0)
-        return (1);
+// int main(void)
+// {
+//     int fd = open("get_next_line_utils.c", O_RDONLY);
+//     char *line;
 
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
+//     if (fd < 0)
+//         return (1);
 
-    close(fd);
-    return (0);
-}
+//     while ((line = get_next_line(fd)))
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
+
+//     close(fd);
+//     return (0);
+// }

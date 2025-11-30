@@ -6,102 +6,59 @@
 /*   By: dcheng <dcheng@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:30:58 by dcheng            #+#    #+#             */
-/*   Updated: 2025/11/26 16:06:14 by dcheng           ###   ########.fr       */
+/*   Updated: 2025/11/26 15:38:23 by dcheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen_gnl(const char *str)
+char	*ft_strjoin_gnl(char *prev, char *buffer, ssize_t bytes)
 {
 	size_t	i;
+	ssize_t	j;
+	char	*res;
 
-	if (!str)
-		return (0);
 	i = 0;
-	while (str[i])
+	if (!buffer)
+		return (NULL);
+	while (prev && prev[i])
 		i++;
-	return (i);
+	res = malloc(i + bytes + 1);
+	if (!res)
+		return (free(prev), NULL);
+	i = 0;
+	while (prev && prev[i])
+	{
+		res[i] = prev[i];
+		i++;
+	}
+	j = 0;
+	while (j < bytes)
+		res[i++] = buffer[j++];
+	res[i] = '\0';
+	free(prev);
+	return (res);
 }
 
-char	*ft_strchr_gnl(const char *s, ssize_t c)
+char	*ft_strdup_gnl(char *s)
 {
-	ssize_t	i;
+	size_t	i;
+	char	*res;
 
-	i = 0;
 	if (!s)
 		return (NULL);
-	while (s[i] && s[i] != (unsigned char)c)
+	i = 0;
+	while (s[i])
 		i++;
-	if (s[i] == (unsigned char)c)
-		return ((char *)&s[i]);
-	return (NULL);
-}
-
-char	*ft_strdup_gnl(const char *s)
-{
-	char	*dup;
-	ssize_t	i;
-
+	res = malloc(i + 1);
+	if (!res)
+		return (NULL);
 	i = 0;
-	if (!s)
-		return (NULL);
-	dup = malloc (ft_strlen_gnl(s) + 1);
-	if (!dup)
-		return (NULL);
 	while (s[i])
 	{
-		dup[i] = s[i];
+		res[i] = s[i];
 		i++;
 	}
-	dup[i] = (0);
-	return (dup);
-}
-
-char	*ft_substr_gnl(char *s, ssize_t start, size_t len)
-{
-	char	*sub;
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	sub = malloc(len + 1);
-	if (!sub)
-		return (NULL);
-	while (i < len && s[start + i])
-	{
-		sub[i] = s[start + i];
-		i++;
-	}
-	sub[i] = (0);
-	return (sub);
-}
-
-char	*ft_strjoin_gnl(char *save, char *buff, size_t r)
-{
-	char	*str;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	if (!buff)
-		return (NULL);
-	str = malloc(ft_strlen_gnl(save) + r + 1);
-	if (!str)
-		return (NULL);
-	if (save)
-	{
-		while (save[i])
-		{
-			str[i] = save[i];
-			i++;
-		}
-		free (save);
-	}
-	while (j < r)
-		str[i++] = buff[j++];
-	str[i] = (0);
-	return (str);
+	res[i] = '\0';
+	return (res);
 }

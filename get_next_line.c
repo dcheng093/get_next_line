@@ -6,55 +6,65 @@
 /*   By: dcheng <dcheng@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 17:01:15 by dcheng            #+#    #+#             */
-/*   Updated: 2025/11/26 16:29:41 by dcheng           ###   ########.fr       */
+/*   Updated: 2025/11/30 01:12:24 by dcheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*extract_line(char **save)
+char	*ft_get_line(char **prev)
 {
-	char	*line;
+	size_t	i;
 	char	*tmp;
-	ssize_t	len;
+	char	*res;
 
-	len = 0;
-	if (!*save || **save == '\0')
+	i = 0;
+	if (!*prev || !(**prev))
+		return (free(*prev), *prev = NULL, NULL);
+	while ((*prev)[i] && (*prev)[i] != '\n')
+		i++;
+	res = malloc(i + 1 + ((*prev)[i] == '\n'));
+	if (!res)
 		return (NULL);
-	while ((*save)[len] && (*save)[len] != '\n')
-		len++;
-	line = ft_substr_gnl(*save, 0, len + ((*save)[len] == '\n'));
-	if (!line)
-		return (NULL);
-	tmp = ft_strdup_gnl(*save + len + ((*save)[len] == '\n'));
-	free(*save);
-	*save = tmp;
-	return (line);
+	i = 0;
+	while ((*prev)[i] && (*prev)[i] != '\n')
+	{
+		res[i] = (*prev)[i];
+		i++;
+	}
+	if ((*prev)[i] == '\n')
+		res[i++] = '\n';
+	res[i] = '\0';
+	tmp = ft_strdup_gnl(*prev + i);
+	free(*prev);
+	*prev = tmp;
+	return (res);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(ssize_t fd)
 {
-	static char	*save[1024];
-	char		*buff;
+	size_t		i;
 	ssize_t		bytes;
+	char		*buffer;
+	static char	*prev;
 
-	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff)
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
 		return (NULL);
 	bytes = 1;
-	while (bytes > 0 && !ft_strchr_gnl(save[fd], '\n'))
+	while (bytes)
 	{
-		bytes = read(fd, buff, BUFFER_SIZE);
+		i = 0;
+		while (prev && prev[i++])
+			if (prev[i] == '\n')
+				return (free(buffer), ft_get_line(&prev));
+		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
-		{
-			free(buff);
-			return (NULL);
-		}
-		buff[bytes] = '\0';
-		save[fd] = ft_strjoin_gnl(save[fd], buff, bytes);
+			return (free(buffer), NULL);
+		buffer[bytes] = '\0';
+		prev = ft_strjoin_gnl(prev, buffer, bytes);
 	}
-	free(buff);
-	return (extract_line(&save[fd]));
+	return (free(buffer), ft_get_line(&prev));
 }
